@@ -43,33 +43,9 @@ public class XMLExporter {
         xml.append("'");
         xml.append(">");
         for (Product product : store.getStock()) {
-            xml.append("<product");
-            xml.append(" id='");
-            xml.append(product.getId());
-            xml.append("'");
-            if (product.isEvent()) {
-                xml.append(" location='");
-                xml.append(store.getName());
-                xml.append("'");
-            } else {
-                xml.append(" weight='");
-                xml.append(product.getWeight());
-                xml.append("'");
-            }
-
-            xml.append(">");
-            xml.append("<price");
-            xml.append(" currency='");
-            xml.append(product.getPrice().getCurrency());
-            xml.append("'>");
-            xml.append(product.getPrice().getAmount());
-            xml.append("</price>");
-            xml.append(product.getName());
-            xml.append("</product>");
+            xml.append(product.exportWithStore());
         }
-
         xml.append("</store>");
-
         return xml.toString();
     }
 

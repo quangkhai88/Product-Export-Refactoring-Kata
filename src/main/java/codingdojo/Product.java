@@ -35,16 +35,20 @@ public class Product {
         return weight;
     }
 
-    public Price getPrice() {
-        return price;
-    }
-
     public double getPriceInUSD() {
         return price.getPriceInUSD();
     }
 
     public boolean isEvent() {
         return false;
+    }
+
+    public String getPriceCurrency() {
+        return price.getCurrency();
+    }
+
+    public double getPriceAmount() {
+        return price.getAmount();
     }
 
     public double getTax() {
@@ -70,9 +74,9 @@ public class Product {
         xml.append(">");
         xml.append("<price");
         xml.append(" currency='");
-        xml.append(getPrice().getCurrency());
+        xml.append(getPriceCurrency());
         xml.append("'>");
-        xml.append(getPrice().getAmount());
+        xml.append(getPriceAmount());
         xml.append("</price>");
         xml.append(getName());
         xml.append("</product>");
@@ -93,5 +97,32 @@ public class Product {
 
     private static String stylistFor() {
         return "Celeste Pulchritudo";
+    }
+
+    public String exportWithStore() {
+        StringBuilder xml = new StringBuilder();
+        xml.append("<product");
+        xml.append(" id='");
+        xml.append(getId());
+        xml.append("'");
+        if (isEvent()) {
+            xml.append(" location='");
+            xml.append(getName());
+            xml.append("'");
+        } else {
+            xml.append(" weight='");
+            xml.append(getWeight());
+            xml.append("'");
+        }
+        xml.append(">");
+        xml.append("<price");
+        xml.append(" currency='");
+        xml.append(getPriceCurrency());
+        xml.append("'>");
+        xml.append(getPriceAmount());
+        xml.append("</price>");
+        xml.append(getName());
+        xml.append("</product>");
+        return xml.toString();
     }
 }
