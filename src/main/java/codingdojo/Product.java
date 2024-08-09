@@ -50,4 +50,48 @@ public class Product {
     public double getTax() {
         return getPriceInUSD() * 0.175;
     }
+
+    public String export() {
+        StringBuilder xml = new StringBuilder();
+        xml.append("<product");
+        xml.append(" id='");
+        xml.append(getId());
+        xml.append("'");
+        if (isEvent()) {
+            xml.append(" stylist='");
+            xml.append(stylistFor());
+            xml.append("'");
+        }
+        if (getWeight() > 0) {
+            xml.append(" weight='");
+            xml.append(getWeight());
+            xml.append("'");
+        }
+        xml.append(">");
+        xml.append("<price");
+        xml.append(" currency='");
+        xml.append(getPrice().getCurrency());
+        xml.append("'>");
+        xml.append(getPrice().getAmount());
+        xml.append("</price>");
+        xml.append(getName());
+        xml.append("</product>");
+        return xml.toString();
+    }
+
+    public String getExportBasicInfo() {
+        StringBuilder xml = new StringBuilder();
+        xml.append("<product");
+        xml.append(" id='");
+        xml.append(getId());
+        xml.append("'");
+        xml.append(">");
+        xml.append(getName());
+        xml.append("</product>");
+        return xml.toString();
+    }
+
+    private static String stylistFor() {
+        return "Celeste Pulchritudo";
+    }
 }

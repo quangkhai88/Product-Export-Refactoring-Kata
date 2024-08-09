@@ -1,5 +1,7 @@
 package codingdojo;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -73,4 +75,50 @@ public class Order {
                 .sum();
     }
 
+    public String getFullExport() {
+        StringBuilder xml = new StringBuilder();
+        xml.append("<order");
+        xml.append(" id='");
+        xml.append(getId());
+        xml.append("'>");
+        for (Product product : getProducts()) {
+            xml.append(product.export());
+        }
+        xml.append("</order>");
+        return xml.toString();
+    }
+
+    public String getExportWithTax() {
+        NumberFormat formatter = new DecimalFormat("#0.00");
+        StringBuilder xml = new StringBuilder();
+        xml.append("<order");
+        xml.append(" date='");
+        xml.append(Util.toIsoDate(getDate()));
+        xml.append("'");
+        xml.append(">");
+        for (Product product : getProducts()) {
+            xml.append(product.getExportBasicInfo());
+        }
+        xml.append("<orderTax currency='USD'>");
+        xml.append(formatter.format(getTotalTax()));
+        xml.append("</orderTax>");
+        xml.append("</order>");
+        return xml.toString();
+    }
+
+    public String getExportHistory() {
+        StringBuilder xml = new StringBuilder();
+        xml.append("<order");
+        xml.append(" date='");
+        xml.append(Util.toIsoDate(getDate()));
+        xml.append("'");
+        xml.append(" totalDollars='");
+        xml.append(totalDollars());
+        xml.append("'>");
+        for (Product product : getProducts()) {
+            xml.append(product.getExportBasicInfo());
+        }
+        xml.append("</order>");
+        return xml.toString();
+    }
 }

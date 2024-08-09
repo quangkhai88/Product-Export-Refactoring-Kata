@@ -7,46 +7,15 @@ import java.util.Date;
 
 public class XMLExporter {
 
+    private XMLExporter() {
+    }
     public static String exportFull(Collection<Order> orders) {
         StringBuilder xml = new StringBuilder();
         xml.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
         xml.append("<orders>");
         for (Order order : orders) {
-            xml.append("<order");
-            xml.append(" id='");
-            xml.append(order.getId());
-            xml.append("'>");
-            for (Product product : order.getProducts()) {
-                xml.append("<product");
-                xml.append(" id='");
-                xml.append(product.getId());
-                xml.append("'");
-                if (product.isEvent()) {
-                    xml.append(" stylist='");
-                    xml.append(stylistFor(product));
-                    xml.append("'");
-                }
-
-                if (product.getWeight() > 0) {
-                    xml.append(" weight='");
-                    xml.append(product.getWeight());
-                    xml.append("'");
-                }
-
-                xml.append(">");
-                xml.append("<price");
-                xml.append(" currency='");
-                xml.append(product.getPrice().getCurrency());
-                xml.append("'>");
-                xml.append(product.getPrice().getAmount());
-                xml.append("</price>");
-                xml.append(product.getName());
-                xml.append("</product>");
-            }
-
-            xml.append("</order>");
+            xml.append(order.getFullExport());
         }
-
         xml.append("</orders>");
         return xml.toString();
     }
@@ -57,37 +26,8 @@ public class XMLExporter {
         xml.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
         xml.append("<orderTax>");
         for (Order order : orders) {
-            xml.append("<order");
-            xml.append(" date='");
-            xml.append(Util.toIsoDate(order.getDate()));
-            xml.append("'");
-            xml.append(">");
-            double tax = 0D;
-            for (Product product : order.getProducts()) {
-                xml.append("<product");
-                xml.append(" id='");
-                xml.append(product.getId());
-                xml.append("'");
-                xml.append(">");
-                xml.append(product.getName());
-                xml.append("</product>");
-                if (product.isEvent())
-                    tax += product.getPriceInUSD() * 0.25;
-                else
-                    tax += product.getPriceInUSD() * 0.175;
-
-            }
-
-            xml.append("<orderTax currency='USD'>");
-            if (order.getDate().before(Util.fromIsoDate("2018-01-01T00:00Z")))
-                tax += 10;
-            else
-                tax += 20;
-            xml.append(formatter.format(tax));
-            xml.append("</orderTax>");
-            xml.append("</order>");
+            xml.append(order.getExportWithTax());
         }
-        
         double totalTax = TaxCalculator.calculateAddedTax(orders);
         xml.append(formatter.format(totalTax));
         xml.append("</orderTax>");
@@ -95,9 +35,8 @@ public class XMLExporter {
     }
 
     public static String exportStore(Store store) {
-        StringBuffer xml = new StringBuffer();
+        StringBuilder xml = new StringBuilder();
         xml.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-
         xml.append("<store");
         xml.append(" name='");
         xml.append(store.getName());
@@ -144,32 +83,10 @@ public class XMLExporter {
         xml.append("'");
         xml.append(">");
         for (Order order : orders) {
-            xml.append("<order");
-            xml.append(" date='");
-            xml.append(Util.toIsoDate(order.getDate()));
-            xml.append("'");
-            xml.append(" totalDollars='");
-            xml.append(order.totalDollars());
-            xml.append("'>");
-            for (Product product : order.getProducts()) {
-                xml.append("<product");
-                xml.append(" id='");
-                xml.append(product.getId());
-                xml.append("'");
-                xml.append(">");
-                xml.append(product.getName());
-                xml.append("</product>");
-            }
-            
-            xml.append("</order>");
+            xml.append(order.getExportHistory());
         }
-        
         xml.append("</orderHistory>");
         return xml.toString();
-    }
-
-    private static String stylistFor(Product product) {
-        return "Celeste Pulchritudo"; // in future we will look up the name of the stylist from the database
     }
 
 }

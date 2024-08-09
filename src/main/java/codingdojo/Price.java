@@ -23,15 +23,12 @@ public class Price {
         return amount;
     }
 
-    private double getAmountInCurrency(String currencyCode) {
-        if (this.currencyCode.equals(currencyCode))
+    public double getPriceInUSD() {
+        if (this.currencyCode.equals("USD"))
             return amount;
         else {
             throw new UnsupportedOperationException("shouldn't call this from a unit test, it will do a slow db lookup");
         }
     }
 
-    public double getPriceInUSD() {
-        return getAmountInCurrency("USD");
-    }
 }
