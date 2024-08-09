@@ -7,11 +7,13 @@ import java.util.Date;
 
 public class XMLExporter {
 
+    private static final String XML_VERSION = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+
     private XMLExporter() {
     }
     public static String exportFull(Collection<Order> orders) {
         StringBuilder xml = new StringBuilder();
-        xml.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+        xml.append(XML_VERSION);
         xml.append("<orders>");
         for (Order order : orders) {
             xml.append(order.getFullExport());
@@ -23,7 +25,7 @@ public class XMLExporter {
     public static String exportTaxDetails(Collection<Order> orders) {
         NumberFormat formatter = new DecimalFormat("#0.00");
         StringBuilder xml = new StringBuilder();
-        xml.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+        xml.append(XML_VERSION);
         xml.append("<orderTax>");
         for (Order order : orders) {
             xml.append(order.getExportWithTax());
@@ -36,7 +38,7 @@ public class XMLExporter {
 
     public static String exportStore(Store store) {
         StringBuilder xml = new StringBuilder();
-        xml.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+        xml.append(XML_VERSION);
         xml.append("<store");
         xml.append(" name='");
         xml.append(store.getName());
@@ -51,7 +53,7 @@ public class XMLExporter {
 
     public static String exportHistory(Collection<Order> orders) {
         StringBuilder xml = new StringBuilder();
-        xml.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+        xml.append(XML_VERSION);
         xml.append("<orderHistory");
         xml.append(" createdAt='");
         Date now = new Date();

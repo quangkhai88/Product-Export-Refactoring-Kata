@@ -45,14 +45,14 @@ class XMLExporterTest {
 
 
     @Test
-    public void exportStore() throws Exception {
+    void exportStore() {
         Store store = FlagshipStore;
         String xml = XMLExporter.exportStore(store);
         Approvals.verifyXml(xml);
     }
 
     @Test
-    public void exportHistory() throws Exception {
+    void exportHistory() {
         Collection<Order> orders = Arrays.asList(RecentOrder, OldOrder);
         String xml = XMLExporter.exportHistory(orders);
         Approvals.verifyXml(xml, new Options().withScrubber(

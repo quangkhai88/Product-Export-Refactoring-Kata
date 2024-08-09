@@ -14,7 +14,6 @@ public class Util {
         TimeZone tz = TimeZone.getTimeZone("UTC");
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
         df.setTimeZone(tz);
-
         try {
             return df.parse(datetime);
         } catch (ParseException e) {
