@@ -39,7 +39,15 @@ public class Product {
         return price;
     }
 
+    public double getPriceInUSD() {
+        return price.getPriceInUSD();
+    }
+
     public boolean isEvent() {
         return false;
+    }
+
+    public double getTax() {
+        return getPriceInUSD() * 0.175;
     }
 }

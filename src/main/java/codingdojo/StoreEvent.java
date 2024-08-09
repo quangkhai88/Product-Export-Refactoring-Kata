@@ -27,4 +27,8 @@ public class StoreEvent extends Product {
     public boolean isEvent() {
         return true;
     }
+
+    public double getTax() {
+        return getPriceInUSD() * 0.25;
+    }
 }

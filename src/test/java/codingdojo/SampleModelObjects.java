@@ -18,6 +18,9 @@ public class SampleModelObjects {
     public static Product Masterclass = new StoreEvent("Eyeshadow Masterclass", "EVENT01", FlagshipStore, new Price(119.99D, "USD"));
     public static Product Makeover = new StoreEvent("Makeover", "EVENT02", FlagshipStore, new Price(149.99D, "USD"));
 
-    public static Order RecentOrder = new Order("1234", Util.fromIsoDate("2018-09-01T00:00Z"),
+    public static Order RecentOrder = new Order("100", Util.fromIsoDate("2018-09-01T00:00Z"),
             FlagshipStore, new Product[] { Makeover });
+
+    public static Order OldOrder = new Order("200", Util.fromIsoDate("2017-09-01T00:00Z"),
+            FlagshipStore, new Product[] { CherryBloom});
 }

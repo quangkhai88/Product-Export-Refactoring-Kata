@@ -72,9 +72,9 @@ public class XMLExporter {
                 xml.append(product.getName());
                 xml.append("</product>");
                 if (product.isEvent())
-                    tax += product.getPrice().getAmountInCurrency("USD") * 0.25;
+                    tax += product.getPriceInUSD() * 0.25;
                 else
-                    tax += product.getPrice().getAmountInCurrency("USD") * 0.175;
+                    tax += product.getPriceInUSD() * 0.175;
 
             }
 
