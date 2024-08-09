@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?><orderHistory createdAt="[Date1]">
+  <order date="[Date2]" totalDollars="389.97">
+    <product id="EVENT02">Makeover</product>
+    <product id="EVENT01">Eyeshadow Masterclass</product>
+    <product id="EVENT01">Eyeshadow Masterclass</product>
+  </order>
+  <order date="[Date3]" totalDollars="14.99">
+    <product id="LIPSTICK01">Cherry Bloom</product>
+  </order>
+</orderHistory>
